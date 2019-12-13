@@ -1,0 +1,42 @@
+﻿<Window x:Class="ClipboardMonitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:ClipboardMonitor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type System:String}">
+                <TextBlock Text="{Binding}"></TextBlock>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type BitmapSource}">
+                <Image Source="{Binding}"/>
+            </DataTemplate>
+            <Style TargetType="ListViewItem">
+                <Style.Triggers>
+                    <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                        <Setter Property="Background" Value="LightBlue" />
+                    </Trigger>
+                    <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                        <Setter Property="Background" Value="LightGray" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <ListView ItemsSource="{Binding ClipboardContents}" AlternationCount="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel>
+                            <ContentControl Content="{Binding Content}"></ContentControl>
+                        </StackPanel>
+                        <TextBlock Text="{Binding ContentType}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
